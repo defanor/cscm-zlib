@@ -11,7 +11,7 @@
 
 ;; test for idempotence
 
-(test-begin)
+(test-begin "in memory")
 
 (test-assert "deflate"
              (begin
@@ -22,7 +22,7 @@
                            (write-string in-data)
                            (close-output-port (current-output-port))
                            (get-output-string string-port)))))
-               (> (string-length out-data) 0)))
+               (> (string-length out-data) #x10000)))
 
 (test "inflate" sha1
       (string->sha1sum
