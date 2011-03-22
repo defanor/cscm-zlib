@@ -127,7 +127,9 @@
            (not eof?))
          (lambda ()
            (unless (= ret Z_STREAM_END)
-             (warning "~A\n" "not finished with inflate")))))))
+             (warning "~A\n" "not finished with inflate"))
+           (unless eof? ; free up memory
+             (inflate-end stream)))))))
 
 (define deflate-init (foreign-lambda int "deflateInit" z-stream int))
 (define deflate (foreign-lambda int "deflate" z-stream int))
