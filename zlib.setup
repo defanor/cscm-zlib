@@ -7,5 +7,5 @@
 (install-extension
  'zlib
  '("zlib.o" "zlib.so" "zlib.import.so")
- '((version 1.0)
+ '((version 0.5)
    (static "zlib.o")))
