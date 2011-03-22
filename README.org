@@ -22,10 +22,11 @@ deflating data into a new stream.
 *** Deflating a stream:
 #+BEGIN_SRC scheme
   (with-output-to-port (open-zlib-compressed-output-port (current-output-port))
-    (do ((s (read-string) (read-string)))
-        ((= 0 (string-length s)))
-      (write-string s))
-    (close-output-port (current-output-port)))
+    (lambda ()
+      (do ((s (read-string) (read-string)))
+          ((= 0 (string-length s)))
+        (write-string s))
+      (close-output-port (current-output-port))))  
 #+END_SRC scheme
 
 ** Notes
