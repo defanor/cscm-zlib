@@ -5,8 +5,8 @@ algorithm internally. It is defined in [[http://tools.ietf.org/html/rfc1950][RFC
 ** Procedures
 These bindings provide two procedures:
 #+BEGIN_EXAMPLE
-(open-zlib-compressed-input-port input-port)
-(open-zlib-compressed-output-port output-port)
+(open-zlib-compressed-input-port [INPUT-PORT])
+(open-zlib-compressed-output-port [OUTPUT-PORT])
 #+END_EXAMPLE
 The first is for inflating an existing zlib stream and the second for
 deflating data into a new stream.
@@ -14,13 +14,13 @@ deflating data into a new stream.
 ** Examples
 *** Inflating a stream:
 #+BEGIN_SRC scheme
-  (with-input-from-port (open-zlib-compressed-input-port (current-input-port))
+  (with-input-from-port (open-zlib-compressed-input-port)
     read-string)
 #+END_SRC
 
 *** Deflating a stream:
 #+BEGIN_SRC scheme
-  (with-output-to-port (open-zlib-compressed-output-port (current-output-port))
+  (with-output-to-port (open-zlib-compressed-output-port)
     (lambda ()
       (do ((s (read-string) (read-string)))
           ((= 0 (string-length s)))
