@@ -34,8 +34,9 @@
 #include <zlib.h>
 <#
 
-;; if this is set too high, it will segfault
-(define chunk #x10000)
+;; if this is set a lot higher, it will segfault
+;; if it is set a little higher, it may cause heap issues
+(define chunk #x5000)
 
 (define-foreign-variable Z_OK int)
 (define-foreign-variable Z_NULL int)
