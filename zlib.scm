@@ -121,8 +121,8 @@
                                             (substring out 0 (- chunk (z-stream-avail-out stream))))))))))
            (if eof? #!eof
                (begin 
-                 (set! pos (+ 1 pos))
-                 (string-ref bytes-avail (- pos 1)))))
+                 (set! pos (add1 pos))
+                 (string-ref bytes-avail (sub1 pos)))))
          (lambda ()
            (and (char-ready? port) (not eof?)))
          (lambda ()
