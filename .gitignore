@@ -1,0 +1,5 @@
+/tests/run
+/zlib.import.scm
+/zlib.import.so
+/zlib.o
+/zlib.so
