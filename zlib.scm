@@ -124,9 +124,10 @@
                  (set! pos (add1 pos))
                  (string-ref bytes-avail (sub1 pos)))))
          (lambda ()
-           (and (char-ready? port) (not eof?)))
+           (not eof?))
          (lambda ()
-           (close-input-port port))))))
+           (unless (= ret Z_STREAM_END)
+             (warning "~A\n" "not finished with inflate")))))))
 
 (define deflate-init (foreign-lambda int "deflateInit" z-stream int))
 (define deflate (foreign-lambda int "deflate" z-stream int))
