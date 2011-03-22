@@ -15,8 +15,7 @@ deflating data into a new stream.
 *** Inflating a stream:
 #+BEGIN_SRC scheme
   (with-input-from-port (open-zlib-compressed-input-port (current-input-port))
-    (lambda ()
-      (read-string)))
+    read-string)
 #+END_SRC
 
 *** Deflating a stream:
