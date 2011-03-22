@@ -8,7 +8,7 @@
  
  (needs foreigners)
 
- (test-depends simple-sha1)
+ (test-depends simple-sha1 test)
  
  (author "Joseph Gay")
  
