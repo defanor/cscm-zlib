@@ -1,0 +1,11 @@
+;;; -*- Scheme -*-
+
+(compile -s -O3 -d1 -lz "zlib.scm" -j zlib)
+(compile -c -O3 -d1 -lz "zlib.scm" -unit zlib)
+(compile -s -O3 -d0 "zlib.import.scm")
+
+(install-extension
+ 'zlib
+ '("zlib.o" "zlib.so" "zlib.import.so")
+ '((version 1.0)
+   (static "zlib.o")))

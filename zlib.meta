@@ -1,0 +1,15 @@
+;;; -*- Scheme -*-
+
+;;; gziplite.meta
+
+((licence "GPL3")
+ 
+ (category parsing)
+ 
+ (needs extras foreigners lolevel ports)
+
+ (test-depends sha1 srfi-1)
+ 
+ (author "Joseph Gay")
+ 
+ (synopsis "Bindings for zlib"))
