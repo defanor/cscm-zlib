@@ -36,5 +36,5 @@ deflating data into a new stream.
 
 ** Tasks
 *** TODO expose compression level settings (currently uses level 6, the default)
-*** TODO test on low memory environment (currently uses a hard-coded chunk size of 64k)
+*** TODO test on low memory environment (currently uses a hard-coded chunk size of 32k)
 *** TODO improve general efficiency of memory usage
