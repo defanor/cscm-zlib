@@ -76,7 +76,7 @@
 (define (z-abort type)
   (abort (make-property-condition 'z-error 'type type)))
 
-(define (open-zlib-compressed-input-port port)
+(define (open-zlib-compressed-input-port #!optional (port (current-input-port)))
   (let ((ret #f)
         (stream (make-z-stream))
         (in (make-string chunk))
@@ -131,7 +131,7 @@
 (define deflate (foreign-lambda int "deflate" z-stream int))
 (define deflate-end (foreign-lambda void "deflateEnd" z-stream))
 
-(define (open-zlib-compressed-output-port port)
+(define (open-zlib-compressed-output-port #!optional (port (current-output-port)))
   (let ((ret #f)
         (stream (make-z-stream))
         (flush Z_NO_FLUSH)
