@@ -4,11 +4,11 @@
 
 ((licence "GPL3")
  
- (category parsing)
+ (category data)
  
- (needs extras foreigners ports)
+ (needs foreigners)
 
- (test-depends sha1 srfi-1)
+ (test-depends simple-sha1)
  
  (author "Joseph Gay")
  
