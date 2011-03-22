@@ -28,7 +28,7 @@
 
 (import scheme chicken foreign)
 
-(use extras foreigners lolevel miscmacros ports)
+(use extras foreigners miscmacros ports)
 
 #>
 #include <zlib.h>
