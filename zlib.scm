@@ -97,8 +97,7 @@
              (begin
                (set! pos 0)
                (set! bytes-avail "")
-               (read-string! chunk in port)
-               (z-stream-avail-in-set! stream (string-length in))
+               (z-stream-avail-in-set! stream (read-string! chunk in port))
                (if (or (= 0 (z-stream-avail-in stream))
                        (= Z_STREAM_END ret))
                    (begin (inflate-end stream) (set! eof? #t))
