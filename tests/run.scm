@@ -35,4 +35,43 @@
 
 (test-end)
 
+(test-begin "file i/o")
+
+(define in-file "")
+(define deflate-file "")
+
+(dynamic-wind
+ (lambda () 
+   (set! in-file (create-temporary-file))
+   (set! deflate-file (create-temporary-file)))
+ (lambda ()
+   (let ((fd (file-open in-file (+ open/wronly open/append open/creat))))
+     (do ((i 0 (add1 i)))
+         ((>= i #x2000))
+       (file-write fd (string-unfold null? car cdr (list-tabulate #x100 (lambda (i) (integer->char (random 255)))))))
+     (file-close fd))
+   (test-assert "initialize" (= (file-size in-file) (* #x100 #x2000)))
+   (set! sha1 (sha1sum in-file))
+   (with-input-from-file in-file
+     (lambda () (with-output-to-port (open-zlib-compressed-output-port (open-output-file deflate-file))
+             (lambda ()
+               (write-string (read-string) #f)
+               (close-output-port (current-output-port))
+               (close-input-port (current-input-port))))))
+   (test-assert "deflate" (> (file-size deflate-file) #x100000))
+   (with-output-to-file in-file
+     (lambda () (with-input-from-port (open-zlib-compressed-input-port (open-input-file deflate-file))
+             (lambda ()
+               (write-string (read-string) #f)
+               (close-output-port (current-output-port))
+               (close-input-port (current-input-port))))))
+   (test "inflate" sha1 (sha1sum in-file)))
+ (lambda ()
+   (when (file-exists? in-file)
+     (delete-file in-file))
+   (when (file-exists? deflate-file)
+     (delete-file deflate-file))))
+
+(test-end)
+
 (test-exit)
