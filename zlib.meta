@@ -1,12 +1,12 @@
 ;;; -*- Scheme -*-
 
-;;; gziplite.meta
+;;; zlib.meta.
 
 ((license "GPL-3")
  
  (category data)
  
- (needs foreigners)
+ (needs foreigners miscmacros)
 
  (test-depends simple-sha1 test)
  
