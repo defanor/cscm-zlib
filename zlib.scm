@@ -24,8 +24,10 @@
 (module zlib
 
 (open-zlib-compressed-input-port
- open-zlib-compressed-output-port)
-
+ open-zlib-compressed-output-port
+ compress
+ uncompress)
+ 
 (import scheme chicken foreign)
 
 (use extras foreigners miscmacros ports)
@@ -33,6 +35,32 @@
 #>
 #include <zlib.h>
 <#
+
+(define c-zlib-compress (foreign-lambda int "compress" (c-pointer unsigned-char) (c-pointer unsigned-long) (c-pointer unsigned-char) unsigned-long))
+(define c-zlib-uncompress (foreign-lambda int "uncompress" (c-pointer unsigned-char) (c-pointer unsigned-long) (c-pointer unsigned-char) unsigned-long))
+
+(define-foreign-record-type ulongp
+  (constructor: make-ulong-ptr)
+  (destructor: free-ulong-ptr!)
+  (unsigned-long val ulong-val-get ulong-val-set!))
+
+(define (zlib-compress str max-len)
+  (let* ((out (make-string max-len))
+         (ulong-ptr (make-ulong-ptr))
+         (ret (begin (ulong-val-set! ulong-ptr max-len)
+                     (c-zlib-compress #$out ulong-ptr #$str (string-length str))))
+         (actual-len (ulong-val-get ulong-ptr)))
+    (free-ulong-ptr! ulong-ptr)
+    (substring out 0 actual-len)))
+
+(define (zlib-uncompress str max-len)
+  (let* ((out (make-string max-len))
+         (ulong-ptr (make-ulong-ptr))
+         (ret (begin (ulong-val-set! ulong-ptr max-len)
+                     (c-zlib-uncompress #$out ulong-ptr #$str (string-length str))))
+         (actual-len (ulong-val-get ulong-ptr)))
+    (free-ulong-ptr! ulong-ptr)
+    (substring out 0 actual-len)))
 
 ;; if this is set a lot higher, it will segfault
 ;; if it is set a little higher, it may cause heap issues
