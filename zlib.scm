@@ -25,8 +25,8 @@
 
 (open-zlib-compressed-input-port
  open-zlib-compressed-output-port
- compress
- uncompress)
+ zlib-compress
+ zlib-uncompress)
  
 (import scheme chicken foreign)
 
